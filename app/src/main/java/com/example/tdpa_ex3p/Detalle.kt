@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.example.tdpa_ex3p.databinding.ActivityDetalleBinding
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class Detalle : AppCompatActivity() {
     private lateinit var binding: ActivityDetalleBinding
@@ -52,7 +54,7 @@ class Detalle : AppCompatActivity() {
         logica(cal, cal2)
     }
 
-    fun borrar(id:String){
+    fun borrar(id: String) {
         val intento = Intent(this, MainActivity::class.java)
         val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
         val bd = admin.writableDatabase
@@ -61,13 +63,19 @@ class Detalle : AppCompatActivity() {
     }
 
     fun logica(cal: String?, cal2: String?) {
-        var cuarenta = cal?.toDouble()?.times(0.2)?.plus((cal2?.toDouble())?.times(0.2)!!)
-        var diez = 10 - cuarenta!!
+        var cuarenta = (cal!!.toDouble()*.2) + (cal2!!.toDouble()*.2)
         var seis = 6 - cuarenta
-        binding.diez.setText("$diez")
-        binding.seis.setText("$seis")
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.UP
+        val roundSeis = df.format(seis)
+        binding.seis.setText("$roundSeis")
+
+        if(cuarenta == 4.0){
+            binding.diez.setText("10")
+            binding.txtmsj.setText("Aún se puede;)")
+        } else {
+            binding.diez.setText("MILAGRO")
+            binding.txtmsj.setText("Ya no se puede:(")
+        }
     }
-
-
-
 }

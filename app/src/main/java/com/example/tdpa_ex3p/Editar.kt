@@ -60,11 +60,11 @@ class Editar : AppCompatActivity() {
         return true
     }
 
-    fun fillData(id:String) {
+    fun fillData(id: String) {
         val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
         val bd = admin.writableDatabase
         val cursor = bd.rawQuery("SELECT * FROM alumnos WHERE _id=$id", null)
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             imagen = "${cursor.getString(5)}"
             val url: Uri = Uri.parse(cursor.getString(5))
             Glide.with(applicationContext).load(url).into(binding.imagenEdit)
@@ -77,7 +77,7 @@ class Editar : AppCompatActivity() {
 
     }
 
-    fun editar(id:String){
+    fun editar(id: String) {
         val intento = Intent(this, Detalle::class.java)
         val admin = AdminSQLiteOpenHelper(this, "administracion", null, version = 1)
         val bd = admin.writableDatabase
